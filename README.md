@@ -1,0 +1,1 @@
+Digest flat file of web activity data and run analyitics against the data set
