@@ -12,6 +12,7 @@
 
 static const std::string inputDataFile = "example_input.txt";
 
+// open file and read space separated values and insert into data store
 void ReadInputFile(const std::string& datafile)
 {
 	std::ifstream file(datafile);
@@ -70,6 +71,7 @@ int main(int argc, char** argv)
 		// take post time stamp
 		high_resolution_clock::time_point endTime = high_resolution_clock::now();
 		std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(endTime - startTime);
+		std::cout << "execution time: " << time_span.count() << " seconds.\n";
     }
 	catch (std::logic_error& ex)
 	{

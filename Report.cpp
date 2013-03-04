@@ -3,6 +3,7 @@
 #include "typedefs.h"
 #include "DataStore.h"
 
+// specialised function to query DataStore and format data into report string
 std::string TotalActionsPerSiteReport::GenerateImpl() const 
 { 
 	std::string reportData("Total number of actions per website:\n");
@@ -20,6 +21,7 @@ std::string TotalActionsPerSiteReport::GenerateImpl() const
 	return reportData; 
 } 
 
+// specialised function to query DataStore and format data into report string
 std::string MeanSessionsReport::GenerateImpl() const 
 { 
 	std::string reportData("Mean number of actions in a session per website:\n");
@@ -42,6 +44,7 @@ std::string MeanSessionsReport::GenerateImpl() const
 	return reportData; 
 } 
 
+// specialised function to query DataStore and format data into report string
 std::string TopActionsReport::GenerateImpl() const 
 { 
 	int lineCount = 0;
@@ -56,7 +59,6 @@ std::string TopActionsReport::GenerateImpl() const
 		}
 		line += ": " + iter->first + "\n";
 		reportData += line;
-
 		// only require lines of data equal to m_numActionsRequired 
 		if (++lineCount == m_numActionsRequired)
 		{

@@ -4,6 +4,15 @@
 #include <map>
 #include "typedefs.h"
 
+////////////////////////////////////////////////////////////////////////////
+//
+// Class: DataStore
+// Purpose: provide datas storage and access for reports to run against
+// Comments: implemented as singleton but could equally well be accessed by
+//			passed reference
+//
+////////////////////////////////////////////////////////////////////////////
+
 class RawData;
 
 class DataStore

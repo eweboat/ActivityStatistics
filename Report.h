@@ -1,6 +1,17 @@
 #pragma once
 #include <string>
 
+////////////////////////////////////////////////////////////////////////////
+//
+// Class: Report
+// Purpose: Abstract base class for data analysis and output
+// Specialisation: derived classes of Report must implement the GenerateImpl
+//		method and may query data store when doing so
+// Comments: it may be desireable for Report to store a reference to the 
+//		DataStore object rather than accessing through singleton
+//
+////////////////////////////////////////////////////////////////////////////
+
 class Report
 {
 public:

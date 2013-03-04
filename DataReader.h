@@ -3,6 +3,9 @@
 #include <vector>
 #include <boost\tokenizer.hpp>
 
+// data stream assistsant class. Provides access through unchecked [] and
+// through at() which will throw on out of bounds access
+
 class DataReader
 {
 	typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
