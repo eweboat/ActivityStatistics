@@ -14,6 +14,8 @@ public:
 	void Insert(const RawData& data);
 
 	const AttributeTracker& GetWebsiteActionTracker() const { return m_websiteActions; }
+	const MappedAttributeTracker& GetWebsiteSessionActionMap() const { return m_websiteSessionActionTracker; }
+	StringIntVec GetActionTrackerSorted() const;
 private:
 	DataStore( ) {}
 	~DataStore() {}
@@ -24,4 +26,6 @@ private:
 	std::vector<RawData*>		m_rawData;
 
 	AttributeTracker			m_websiteActions;
+	AttributeTracker			m_actionTracker;
+	MappedAttributeTracker		m_websiteSessionActionTracker;
 };

@@ -21,6 +21,7 @@ private:
 class MeanSessionsReport : public Report
 {
 private:
+	enum { PadLengthTo = 13 };
 	virtual std::string GenerateImpl() const;
 };
 
@@ -30,6 +31,8 @@ public:
 	TopActionsReport(unsigned int numRequired) : m_numActionsRequired(numRequired) {}
 
 private:
+	enum { PadLengthTo = 8 };
 	virtual std::string GenerateImpl() const;
+
 	unsigned int		m_numActionsRequired;
 };

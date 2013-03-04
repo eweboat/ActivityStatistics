@@ -88,8 +88,5 @@ int main(int argc, char** argv)
 		std::cerr << "An unexpected error occured: Exiting...\n" << std::endl;
 	}
 
-	// todo remove me
-	std::cout << "Press enter key to exit\n";
-	std::cin.get();
 	return 0;
 }
