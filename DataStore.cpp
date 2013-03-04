@@ -16,6 +16,9 @@ void DataStore::Insert(const std::string& sessionId, const std::string& websiteI
 {
 	RawData* data = new RawData(sessionId, websiteId, action);
 	m_rawData.push_back(data);
+
+	// copy data into specialised data structure to aid report generation
+	m_websiteActions[websiteId] = m_websiteActions[websiteId] + 1;
 }
 
 void DataStore::Insert(const RawData& data)

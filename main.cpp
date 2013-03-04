@@ -55,10 +55,17 @@ int main(int argc, char** argv)
 		ReadInputFile(inputDataFile);
 
 		// run reports
+		std::string output;
 		for (auto report : reports)
 		{
-			std::cout << report->Generate() << "\n";
+			output += report->Generate() + "\n";
 		}
+		std::cout << output; // todo remove
+		std::ofstream output_file("output.txt");
+		std::ostream_iterator<char> output_iterator(output_file);
+		std::copy(output.begin(), output.end(), output_iterator);
+		output_file.close();	
+
 
 		// take post time stamp
 		high_resolution_clock::time_point endTime = high_resolution_clock::now();
@@ -81,6 +88,7 @@ int main(int argc, char** argv)
 		std::cerr << "An unexpected error occured: Exiting...\n" << std::endl;
 	}
 
+	// todo remove me
 	std::cout << "Press enter key to exit\n";
 	std::cin.get();
 	return 0;

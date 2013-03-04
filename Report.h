@@ -14,6 +14,7 @@ private:
 class TotalActionsPerSiteReport : public Report
 {
 private:
+	enum { PadLengthTo = 13 };
 	virtual std::string GenerateImpl() const;
 };
 

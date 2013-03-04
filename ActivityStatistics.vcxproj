@@ -71,6 +71,7 @@
   <ItemGroup>
     <Text Include="example_input.txt" />
     <Text Include="example_output.txt" />
+    <Text Include="output.txt" />
     <Text Include="README.md" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +80,7 @@
     <ClInclude Include="CommandLineInterpreter.h" />
     <ClInclude Include="RawData.h" />
     <ClInclude Include="Report.h" />
+    <ClInclude Include="typedefs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
