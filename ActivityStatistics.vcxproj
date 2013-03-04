@@ -66,6 +66,7 @@
     <ClCompile Include="DataStore.cpp" />
     <ClCompile Include="CommandLineInterpreter.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Report.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="example_input.txt" />

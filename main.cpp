@@ -5,16 +5,41 @@
 #include <chrono>
 #include "CommandLineInterpreter.h"
 #include "DataReader.h"
+#include "DataStore.h"
+#include <fstream>
+
+#include "Report.h"
+
+static const std::string inputDataFile = "example_input.txt";
+
+void ReadInputFile(const std::string& datafile)
+{
+	std::ifstream file(datafile);
+	DataReader row;
+	DataStore& dataStore = DataStore::GetInstance();
+	while (file >> row)
+	{
+		try
+		{
+			dataStore.Insert(row.at(0), row.at(1), row.at(2));
+		}
+		catch(...)
+		{
+			// do nothing on exception but allow rest of data to ingested
+		}
+	}
+}
 
 int main(int argc, char** argv)
 {
 	try
 	{
-		ReadInputFile("example_input.txt");
-
 		// take initial time stamp
 		using std::chrono::high_resolution_clock;
 		high_resolution_clock::time_point startTime = high_resolution_clock::now();
+
+		// store required reports in vector
+		std::vector<Report*> reports;
 
 		// put build array out of command line args and process
 		{
@@ -23,26 +48,21 @@ int main(int argc, char** argv)
 			{
 				throw std::runtime_error("invalide number of arguements (" + boost::lexical_cast<std::string>(argVector.size()) + ")\n");
 			}
-			//ParseCommandLineInstructions(argVector);
+			CommandLine::ParseCommandLineInstructions(argVector, reports);
 		}
 
-		// Populate list of primes
-		//std::vector<unsigned int> orderedLeftPrimes;
-		//FindLeftTruncatablePrimes(orderedLeftPrimes, targetIndex);
+		// read data file into store
+		ReadInputFile(inputDataFile);
+
+		// run reports
+		for (auto report : reports)
+		{
+			std::cout << report->Generate() << "\n";
+		}
 
 		// take post time stamp
 		high_resolution_clock::time_point endTime = high_resolution_clock::now();
 		std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(endTime - startTime);
-
-		// output results
-		//unsigned int indexTrailingDigit = targetIndex % 10;
-		//std::string ordinality = "th";
-		//ordinality = indexTrailingDigit == 1 ? "st" : ordinality;
-		//ordinality = indexTrailingDigit == 2 ? "nd" : ordinality;
-		//ordinality = indexTrailingDigit == 3 ? "rd" : ordinality;
-		//std::cout << "result : the " << targetIndex << ordinality << " left truncatable prime = " << orderedLeftPrimes.at(targetIndex-1) << "\n";
-		std::cout << "execution time: " << time_span.count() << " seconds.\n";
-
     }
 	catch (std::logic_error& ex)
 	{
@@ -50,11 +70,11 @@ int main(int argc, char** argv)
 	}
 	catch (std::runtime_error& ex)
 	{
-		std::cerr << "An runtime error has occured: " << ex.what() << "\nExiting...\n" << std::endl;
+		std::cerr << "A runtime error has occured: " << ex.what() << "\nExiting...\n" << std::endl;
 	}
 	catch (std::exception& ex)
 	{
-		std::cerr << "An unexpected error occured: " << ex.what() << "\nExiting...\n" << std::endl;
+		std::cerr << "A unexpected error has occured: " << ex.what() << "\nExiting...\n" << std::endl;
 	}
 	catch (...)
 	{

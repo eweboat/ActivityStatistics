@@ -1,26 +1,7 @@
 #include "DataReader.h"
 #include <fstream>
 #include <sstream>
-#include "DataStore.h"
 
-
-void ReadInputFile(const std::string& datafile)
-{
-	std::ifstream file(datafile);
-	DataReader row;
-	DataStore& dataStore = DataStore::GetInstance();
-	while (file >> row)
-	{
-		try
-		{
-			dataStore.Insert(row.at(0), row.at(1), row.at(2));
-		}
-		catch(...)
-		{
-			int i = 9;
-		}
-	}
-}
 
 std::string const& DataReader::at(std::size_t index) const
 {
