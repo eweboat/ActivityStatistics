@@ -2,7 +2,6 @@
 #include <vector>
 #include <string>
 #include <boost\lexical_cast.hpp>
-#include <chrono>
 #include "CommandLineInterpreter.h"
 #include "DataReader.h"
 #include "DataStore.h"
@@ -37,10 +36,6 @@ int main(int argc, char** argv)
 {
 	try
 	{
-		// take initial time stamp
-		using std::chrono::high_resolution_clock;
-		high_resolution_clock::time_point startTime = high_resolution_clock::now();
-
 		// store required reports in vector
 		std::vector<Report*> reports;
 
@@ -69,12 +64,6 @@ int main(int argc, char** argv)
 		std::ostream_iterator<char> output_iterator(output_file);
 		std::copy(output.begin(), output.end(), output_iterator);
 		output_file.close();	
-
-
-		// take post time stamp
-		high_resolution_clock::time_point endTime = high_resolution_clock::now();
-		std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(endTime - startTime);
-		std::cout << "execution time: " << time_span.count() << " seconds.\n";
     }
 	catch (std::logic_error& ex)
 	{

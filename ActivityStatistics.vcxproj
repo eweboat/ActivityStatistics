@@ -69,6 +69,7 @@
     <ClCompile Include="Report.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Comments.txt" />
     <Text Include="example_input.txt" />
     <Text Include="example_output.txt" />
     <Text Include="output.txt" />
