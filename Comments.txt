@@ -9,11 +9,20 @@ The intention behind the report class is that new reports can be created without
 
 I have implemented the DataStore class as a singleton so that it can be accessed without creating undue coupling. Conversely it could be passed to objects as required. This decision would need to make in the broader context of requirements.
 
+A note on usage of stl containers
+---------------------------------
+
+In practice the only items that I would normally put into stl containers are plain old data types and pointers as stl contains will frequently perform copy/move operation on their internals. The implementation used in my code would be replaced with containers that hold pointers to class objects. 
+For stl strings I would seek to store them once in a string dictionary and elsewhere store a handle which would act as a key to the string dictionary. 
+
 Discussion of points raised in the brief
 ----------------------------------------
 
-
- - we'd also like a sketch (but don't implement) of how to implement statistics for "num" most common "action sequences" and their counts (see [1]) per Web site. I.e., for each site find the most frequent sequence of actions. Order sequences by their frequency (most frequent first). Order sequences of equal frequency by their length (number of actions in a sequence, longest first). 
+* how to implement statistics for "num" most common "action sequences" and their counts 
+Assumption: that for each session only one website is accessed. This is true in the data but may not be true in general.
+My initial though here is that generating this data set would quite likely involve a good deal of processing and so I would consider using lazy evaluation - after all we may never actually access the data!
+My naïve method would be as follows. For each new record maintain a standard map of each session id to a vector of action in time order i.e. std::map< Session*, std::vector<Action*>> (we'd need to store website for this session too, of course). To generate the report each vector of actions would to be split into all possible action sequences. A vector of N actions would generate SUM(i) over the range i=1 to N i.e. a lot! The painful step would then be to seek matches across the whole set! 
+I would approach this by writing code to support a functionally correct (if naïve) algorithm and then to seek areas of improvement… alternatively said: functionality and clarity first, optimisation later.
 
 * how to be flexible about data numbers and types
 In order to support flexible data types I would make a template around the DataStore class. I have constructed an example of such a class at the end of this file (note that my example also includes a data access policy template).
@@ -30,6 +39,9 @@ For a given concrete Report class (which represent statistics in this context) I
 
 * how to support processing "real time" data where actions come in one after another and the statistics need to be updated
  To run against live data there will be a need to record time stamps on incoming data. Reports will need to store the timestamp of their most recent data snapshot and likely some state. Subsequent report runs might then take only the delta data. For example the mean actions report might store how many records were used to generate the mean so that new data can be augmented without biasing the weights. One method to so this would be to re-inflate the mean join the new data and recalculate the mean but I suspect that there would a better method to achieve this so as to avoid hardware limitations.
+
+Templated policy based version of DataStore
+-------------------------------------------
 
 Re-expression of DataStore for flexible data type storage and alternate data access methods.
 The policy based DataStore class can be extended with the addition of alternate policies.
@@ -50,7 +62,7 @@ template
    class T,
    template <class> class AccessPolicy
 >
-class DataStore : public AccessPolicy<T>, public AdditionalPolicy ...
+class DataStore2 : public AccessPolicy<T>, public AdditionalPolicy ...
 {
    //...
 	void ReadData()
@@ -61,9 +73,6 @@ private:
    std::vector<T> m_data;
 };
 
-typedef DataStore<RawData, FileAccess> DataStoreFile;
-typedef DataStore<RawData, DatabaseAccess> DataStoreDatabase;
-
-
-
+typedef DataStore2<RawData, FileAccess> DataStoreFile;
+typedef DataStore2<RawData, DatabaseAccess> DataStoreDatabase;
 
