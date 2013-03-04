@@ -62,10 +62,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DataReader.cpp" />
+    <ClCompile Include="DataStore.cpp" />
+    <ClCompile Include="CommandLineInterpreter.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="example_input.txt" />
+    <Text Include="example_output.txt" />
     <Text Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DataReader.h" />
+    <ClInclude Include="DataStore.h" />
+    <ClInclude Include="CommandLineInterpreter.h" />
+    <ClInclude Include="RawData.h" />
+    <ClInclude Include="Report.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
