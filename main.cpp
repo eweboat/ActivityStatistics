@@ -10,7 +10,9 @@
 
 #include "Report.h"
 
+// would probably be a good idea to read the file URIs from command line ...
 static const std::string inputDataFile = "example_input.txt";
+static const std::string outputDataFile = "output.txt";
 
 // open file and read space separated values and insert into data store
 void ReadInputFile(const std::string& datafile)
@@ -61,8 +63,9 @@ int main(int argc, char** argv)
 		{
 			output += report->Generate() + "\n";
 		}
-		std::cout << output; // todo remove
-		std::ofstream output_file("output.txt");
+		// output to standard out and file
+		std::cout << output; 
+		std::ofstream output_file(outputDataFile);
 		std::ostream_iterator<char> output_iterator(output_file);
 		std::copy(output.begin(), output.end(), output_iterator);
 		output_file.close();	
